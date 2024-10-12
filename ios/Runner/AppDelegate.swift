@@ -8,6 +8,8 @@ import UserNotifications
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
+    GMSServices.provideAPIKey("AIzaSyC8rdhPJRluxpPf3VcAs9LtD3zi4mXwxg0")
+
     FirebaseApp.configure()
     
     // Request notification permission
