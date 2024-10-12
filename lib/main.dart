@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';  // Add this line for Firebase Core
-import 'package:firebase_messaging/firebase_messaging.dart'; // Add this line for Firebase Messaging
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import '/services/auth_service.dart';
 
-// Background message handler
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  print('Handling a background message: ${message.messageId}');
-}
-
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // Initialize Firebase
   await Firebase.initializeApp();
+  
+  // Request permission for notifications
+  await FirebaseMessaging.instance.requestPermission();
 
-  // Setup background message handling
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  // Handle foreground messages
+  FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    print('Received a message while in the foreground: ${message.notification?.title}');
+  });
 
   runApp(MyApp());
 }
@@ -26,45 +26,23 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(),
+      home: LoginScreen(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  // Initialize Firebase Messaging
-  FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
-
-  @override
-  void initState() {
-    super.initState();
-
-    // Request permission for notifications
-    _firebaseMessaging.requestPermission(
-      alert: true,
-      badge: true,
-      sound: true,
-    );
-
-    // Listen for foreground messages
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print('Received message while app is in the foreground: ${message.messageId}');
-    });
-  }
-
+class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Memory Map'),
-      ),
+      appBar: AppBar(title: Text("Login")),
       body: Center(
-        child: Text('Memory Map App Home Page'),
+        child: ElevatedButton(
+          onPressed: () async {
+            await login(); // Call your login function
+          },
+          child: Text("Login with Auth0"),
+        ),
       ),
     );
   }
