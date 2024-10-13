@@ -19,6 +19,8 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -32,16 +34,18 @@ class MyApp extends StatelessWidget {
 }
 
 class LoginScreen extends StatelessWidget {
+  const LoginScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Login")),
+      appBar: AppBar(title: const Text("Login")),
       body: Center(
         child: ElevatedButton(
           onPressed: () async {
             await login(); // Call your login function
           },
-          child: Text("Login with Auth0"),
+          child: const Text("Login with Auth0"),
         ),
       ),
     );

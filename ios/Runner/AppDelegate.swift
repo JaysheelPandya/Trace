@@ -1,5 +1,5 @@
+import UIKit
 import GoogleMaps
-import Firebase
 import UserNotifications
 
 @main
@@ -9,8 +9,6 @@ import UserNotifications
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
     GMSServices.provideAPIKey("AIzaSyC8rdhPJRluxpPf3VcAs9LtD3zi4mXwxg0")
-
-    FirebaseApp.configure()
     
     // Request notification permission
     if #available(iOS 10.0, *) {

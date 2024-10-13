@@ -1,6 +1,6 @@
 import 'package:flutter_appauth/flutter_appauth.dart';
 
-final FlutterAppAuth appAuth = const FlutterAppAuth();
+const FlutterAppAuth appAuth = FlutterAppAuth();
 
 Future<void> login() async {
   final AuthorizationTokenResponse? result = await appAuth.authorizeAndExchangeCode(
